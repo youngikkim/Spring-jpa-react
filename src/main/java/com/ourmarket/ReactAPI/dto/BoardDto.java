@@ -8,29 +8,37 @@ public class BoardDto {
     private String Name;	
     private String Read;
 
-    // 기본 생성자
-    public BoardDto(){}
+    private Integer ListSize; 
+    private Integer PAGE_NO;
+    private String SearchWord;
+    
+    
+    
 
-    // 매개변수를 받는 생성자
-    public BoardDto(String BoardId, String Title, String Content, String Name, String Read) {
-        this.BoardId = BoardId;
-        this.Title = Title;
-        this.Content = Content;  // name 필드와 매개변수 연결
-        this.Name = Name;
-        this.Read = Read;
-    }
+	public String getSearchWord() {
+		return SearchWord;
+	}
 
-    // toString 메서드
-    @Override
-    public String toString() {
-        return "UserDto ["
-                + "BoardId=" + BoardId + "/ "
-                + "Title=" + Title + "/ "
-                + "Content=" + Content + "/ "
-                + "Name=" + Name + "/ "          
-                + "Read=" + Read + "/ "        
-                + "]";        
-    }
+	public void setSearchWord(String searchWord) {
+		SearchWord = searchWord;
+	}
+
+	public Integer getListSize() {
+		return ListSize;
+	}
+
+	public void setListSize(Integer listSize) {
+		ListSize = listSize;
+	}
+
+	public Integer getPAGE_NO() {
+		return PAGE_NO;
+	}
+
+	public void setPAGE_NO(Integer pAGE_NO) {
+		PAGE_NO = pAGE_NO;
+	}
+
 
 	public String getBoardId() {
 		return BoardId;

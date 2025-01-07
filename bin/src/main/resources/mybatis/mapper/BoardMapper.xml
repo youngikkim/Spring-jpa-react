@@ -4,8 +4,13 @@
     <select id="boardCount" resultType="int">
         SELECT count(BoardId) AS cbt FROM tbl_board;
     </select>
+    <select id="boardList" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
+        SELECT
+        *
+        FROM tbl_board;
+    </select>
     
-<select id="boardList" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
+<select id="boardListForPage" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
     SELECT T1.*
     FROM (
         SELECT T0.*
@@ -15,14 +20,15 @@
         FROM (
             SELECT *
             FROM tbl_board
-            <where>
+		    
+		    <where>
                 <!-- SearchWord가 있을 때만 조건 추가 -->
                 <if test="SearchWord != null and SearchWord != ''">
-                    AND (title LIKE '%' + #{SearchWord} + '%'
+                    (title LIKE '%' + #{SearchWord} + '%'
                     OR content LIKE '%' + #{SearchWord} + '%'
                     OR name LIKE '%' + #{SearchWord} + '%')
                 </if>
-            </where>
+		    </where>
 
         ) T0
     ) T1
