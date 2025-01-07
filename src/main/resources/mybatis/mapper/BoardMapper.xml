@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourmarket.ReactAPI.mapper.BoardMapper">
-    <select id="boardCount" resultType="int">
-        SELECT count(BoardId) AS cbt FROM tbl_board;
-    </select>
-    
+
 <select id="boardList" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
     SELECT T1.*
     FROM (
@@ -18,24 +15,49 @@
             <where>
                 <!-- SearchWord가 있을 때만 조건 추가 -->
                 <if test="SearchWord != null and SearchWord != ''">
-                    AND (title LIKE '%' + #{SearchWord} + '%'
+                    (title LIKE '%' + #{SearchWord} + '%'
                     OR content LIKE '%' + #{SearchWord} + '%'
                     OR name LIKE '%' + #{SearchWord} + '%')
                 </if>
             </where>
-
         ) T0
     ) T1
     WHERE PAGE_NO = #{PAGE_NO}
 
     ORDER BY T1.boardID DESC
 </select>
+<select id="boardListForGet" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
+    SELECT T1.*
+    FROM (
+        SELECT T0.*
+            , FLOOR(((ROW_NUMBER() OVER (
+                ORDER BY T0.boardID DESC
+            )) - 1) / #{ListSize} + 1) AS PAGE_NO
+        FROM (
+            SELECT *
+            FROM tbl_board
+            <where>
+                <!-- SearchWord가 있을 때만 조건 추가 -->
+                <if test="SearchWord != null and SearchWord != ''">
+                    (title LIKE '%' + #{SearchWord} + '%'
+                    OR content LIKE '%' + #{SearchWord} + '%'
+                    OR name LIKE '%' + #{SearchWord} + '%')
+                </if>
+            </where>
+        ) T0
+    ) T1
+    WHERE PAGE_NO = #{PAGE_NO}
 
+    ORDER BY T1.boardID DESC
+</select>
     <select id="findById" resultType="com.ourmarket.ReactAPI.dto.BoardDto">
         SELECT
-        *
-        FROM tbl_board where        
-        BoardId = #{boardId};
+        a.*,
+        0 as PAGE_NO,
+        0 as ListSize,
+        '' as SearchWord
+        FROM tbl_board as a 
+        where BoardId = #{boardId};
     </select>
 
     <insert id="insertBoard" parameterType="com.ourmarket.ReactAPI.dto.BoardDto">

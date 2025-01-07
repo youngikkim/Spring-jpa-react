@@ -14,25 +14,27 @@ public class BoardManager {
 	 @Autowired
 	 private BoardRepository boardRepository;
 	
-	 public List<BoardDto> getBoardList(BoardDto boardDto) {
-		return boardRepository.getBoardList(boardDto);
-		 
+	 public List<BoardDto> BoardList(BoardDto boardDto) {
+		return boardRepository.BoardListForGet(boardDto);		 
 	 }
 
-/*	 
-	 public int <BoardDto> boardCount() {
-		
-		 return boardRepository.
-		 
-	 }	
+	 public List<BoardDto> BoardListForGet(BoardDto boardDto) {
+		return boardRepository.BoardList(boardDto);		 
+	 }	 
 	 
+	 public BoardDto BoardFindById(BoardDto boardDto) {
+		return boardRepository.getBoardFindById(boardDto);		 
+	 }	 	 
+
+	 public int BoardInsert(BoardDto boardDto) {
+		return boardRepository.insertBoard(boardDto);		 
+	 }	 	 
+	 public int BoardUpdate(BoardDto boardDto) {
+		return boardRepository.updateBoard(boardDto);		 
+	 }	 	 
 	 
+	 public int BoardDelete(BoardDto boardDto) {
+		return boardRepository.deleteBoard(boardDto);		 
+	 }		 
 	 
-     int boardCount();
-     List<BoardDto>  boardList(); 
-     BoardDto getData(String boardId);
-     int  insertBoard(BoardDto boardDto);
-     int  deleteBoard(BoardDto boardDto);
-     List<BoardDto> boardListForPage(int ListSize, int PAGE_NO); 
-  */   
 }

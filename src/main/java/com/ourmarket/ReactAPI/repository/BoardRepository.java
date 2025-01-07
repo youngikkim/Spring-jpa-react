@@ -14,8 +14,28 @@ public class BoardRepository{
 	@Autowired 
 	private BoardMapper boardMapper;
 	
-	public List<BoardDto> getBoardList(BoardDto boardDto) {
+	public List<BoardDto>  BoardList(BoardDto boardDto) {
 		return boardMapper.boardList(boardDto);
 	}
 
+	public List<BoardDto>  BoardListForGet(BoardDto boardDto) {
+		return boardMapper.boardList(boardDto);
+	}	
+	
+	public BoardDto getBoardFindById(BoardDto boardDto) {
+		return boardMapper.findById(boardDto);
+	}	
+	
+	public int insertBoard(BoardDto boardDto) {		
+		return boardMapper.insertBoard(boardDto);
+	}
+
+	public int updateBoard(BoardDto boardDto) {		
+		return boardMapper.updateBoard(boardDto);
+	}	
+	
+	public int deleteBoard(BoardDto boardDto) {		
+		return boardMapper.deleteBoard(boardDto);
+	}		
+	
 }
