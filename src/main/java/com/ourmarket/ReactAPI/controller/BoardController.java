@@ -2,10 +2,15 @@ package com.ourmarket.ReactAPI.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,9 +31,13 @@ public class BoardController {
         this.boardManager = boardManager;
     }	
 
-	@PostMapping
-    public ResponseEntity<List<BoardDto>> getBoardList(@RequestBody BoardDto boardDto) {
-
+	@GetMapping
+    public ResponseEntity<List<BoardDto>> getBoardList(int ListSize, int PAGE_NO , String SearchWord) {
+	    // BoardDto 객체 생성 및 파라미터 설정
+	    BoardDto boardDto = new BoardDto();
+	    boardDto.setListSize(ListSize);
+	    boardDto.setPAGE_NO(PAGE_NO);
+	    boardDto.setSearchWord(SearchWord);
 		List<BoardDto> board = boardManager.BoardList(boardDto);
         return ResponseEntity.ok(board);
     }
@@ -67,5 +76,35 @@ public class BoardController {
 	    
 	    // ResponseEntity로 응답 반환
 	    return ResponseEntity.ok(boardDto);
-	}   
+	} 
+	
+	@PostMapping
+	public ResponseEntity<String> Save(@RequestBody BoardDto boardDto) throws Exception{
+		
+        // 서비스 호출하여 데이터 받아오기
+        boardManager.BoardInsert(boardDto);
+	    
+	    // ResponseEntity로 응답 반환
+	    return ResponseEntity.ok("Ok");
+	} 	
+	@PutMapping
+	public ResponseEntity<String> Update(@RequestBody BoardDto boardDto) throws Exception{
+		
+        // 서비스 호출하여 데이터 받아오기
+        boardManager.BoardUpdate(boardDto);
+	    
+	    // ResponseEntity로 응답 반환
+	    return ResponseEntity.ok("Ok");
+	}	
+
+	@DeleteMapping
+	public ResponseEntity<String> Delete(@RequestBody BoardDto boardDto) throws Exception{
+		
+        // 서비스 호출하여 데이터 받아오기
+        boardManager.BoardDelete(boardDto);
+	    
+	    // ResponseEntity로 응답 반환
+	    return ResponseEntity.ok("Ok");
+	}
+
 }
