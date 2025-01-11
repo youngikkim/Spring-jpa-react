@@ -1,0 +1,9 @@
+diff --git a/.gitignore b/.gitignore
+index 549e00a..dd6c840 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -31,3 +31,4 @@ build/
+ 
+ ### VS Code ###
+ .vscode/
++src/main/resources/application2.properties.windows
